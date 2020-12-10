@@ -1,0 +1,17 @@
+{
+  "name": "pleaseclown.me",
+  "version": "1.0.0",
+  "description": "An API that returns random clown sounds (WIP)",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Drew Isaacson",
+  "license": "ISC",
+  "dependencies": {
+    "ffmpeg": "0.0.4",
+    "https": "^1.0.0"
+  }
+}
