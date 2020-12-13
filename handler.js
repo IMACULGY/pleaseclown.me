@@ -26,8 +26,12 @@ module.exports.handleRequest = function(req, res) {
                 });
                 fs.createReadStream(filePath).pipe(res);
             }
-            else if (req.url == '/test')
+            else if (req.url == '/test') {
                 res.writeHead(200).end('Hello World\n');
+            }
+            else {
+                res.writeHead(404).end('Not Found');
+            }
         } else {
             res.writeHead(405).end('Method not allowed. Use GET or HEAD.\n');
         }
