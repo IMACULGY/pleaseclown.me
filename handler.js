@@ -5,7 +5,8 @@ module.exports.handleRequest = function(req, res) {
     const headers = {
 			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Methods': 'GET',
-			'Access-Control-Allow-Headers': ['Content-Type', 'Content-Length']
+			'Access-Control-Allow-Headers': ['Content-Type', 'Content-Length'],
+			'Cache-Control': ['max-age=0', 'must-revalidate']
         };
 
     try {
