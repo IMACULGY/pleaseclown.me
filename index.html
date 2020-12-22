@@ -12,6 +12,8 @@
 		<!-- CSS -->
         <link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="https://unpkg.com/wingcss"/>
+
+		
     </head>
     <body>
         <div class="nav horizontal-align">
@@ -30,16 +32,20 @@
 				<h3 class="header">DEMO</h3>
 				<p class="content"> Press the button below to try the API.</p>
 				<!-- API code goes here <audio> -->
-				<audio id="clownmp3" src="placeholder.mp3">
-				<!--
-				<audio id="clownmp3" src="placeholder.mp3">
-				<audio id="clownwav" src="placeholder.wav">
-				<audio id="clownogg" src="placeholder.ogg">
-				-->
-				Sorry, audio not supported on your browser.</audio>
-				<button>Try Me</button>
+					<audio controls id="clownaudio">
+						<source id="clownmp3" src="http://api.pleaseclown.me/" type="audio/mpeg">
+						<!--
+						<source id="clownwav" src="http://api.pleaseclown.me/?format=wav" type="audio/wav">
+						<source id="clownogg" src="http://api.pleaseclown.me/?format=ogg" type="audio/ogg">
+						-->
+					Sorry, your browser does not support audio.
+					</audio>
+				<br>
+				<button onclick="newAudio()">Try Me</button>
 			</div>
 		</section>
+		<br>
+		<br>
 		<section id="usage" class="container center">
 			<div>
 				<h3 class="header">USAGE</h3>
@@ -52,5 +58,12 @@
 		<footer class="container center">
 			<a href="https://github.com/IMACULGY" id="footer-link"><span>Made by Drew Isaacson (IMACULGY)</span></a>
 		</footer>
+
+		<script>
+			function newAudio() {
+				document.getElementById("clownmp3").src = "http://api.pleaseclown.me#" + new Date().getTime();
+				document.getElementById("clownaudio").load();
+			}
+		</script>
     </body>
 </html>
