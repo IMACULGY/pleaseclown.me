@@ -13,11 +13,32 @@ module.exports.handleRequest = function(req, res) {
         //Create url to parse the path+query
         //?format=mp3,wav,ogg,...
         //Todo: Add compatibility for specific sounds and formats
+        var filePath = "";
         const url = new URL('https://example.com/' + req.url);
         if (req.method == 'GET' || req.method == 'HEAD') {
-            if(req.url == '/' || req.url == 'random') {
+            if(req.url == '/' || req.url == '/random') {
                 //Send back a random audio (mp3).
-                var filePath = './audio/' + randomAudio();
+                filePath = './audio/' + randomAudio();
+            }
+            else if (req.url.indexOf('/audio') == 0) {
+                if(audio.includes(req.url.substring(7))) {
+                    filePath = '.' + req.url;
+                }
+                else {
+                    res.writeHead(404);
+                    res.end('Audio File Not Found\n');
+                }
+            }
+            else if (req.url == '/test') {
+                res.writeHead(200);
+                res.end('Hello World\n');
+            }
+            else {
+                res.writeHead(404);
+                res.end('Not Found\n');
+            }
+
+            if (filePath != "") {
                 console.log(filePath);
                 var stat = fs.statSync(filePath);
                 res.writeHead(200, {
@@ -27,24 +48,17 @@ module.exports.handleRequest = function(req, res) {
                 });
                 fs.createReadStream(filePath).pipe(res);
             }
-            else if (req.url == '/test') {
-                res.writeHead(200).end('Hello World\n');
-            }
-            else {
-                res.writeHead(404).end('Not Found');
-            }
+            
         } else {
-            res.writeHead(405).end('Method not allowed. Use GET or HEAD.\n');
+            res.writeHead(405);
+            res.end('Method not allowed. Use GET or HEAD.\n');
         }
 
 
     } catch (error) {
-        const body = 'An unexpected error has occurred.\n' + error;
-        res.writeHead(500, {
-            ...headers,
-            'Content-Type': 'text/plain',
-            'Content-Length': Buffer.byteLength(body)
-        }).end(body);
+        console.log(error);
+        res.writeHead(500);
+        res.end('An unexpected error has occurred.\n' + error);
     }
     return res;
 }
