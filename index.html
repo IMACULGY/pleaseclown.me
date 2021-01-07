@@ -33,10 +33,10 @@
 				<p class="content"> Press the button below to try the API.</p>
 				<!-- API code goes here <audio> -->
 					<audio controls id="clownaudio">
-						<source id="clownmp3" src="http://api.pleaseclown.me/" type="audio/mpeg">
+						<source id="clownmp3" src="https://pleaseclown-me.herokuapp.com" type="audio/mpeg">
 						<!--
-						<source id="clownwav" src="http://api.pleaseclown.me/?format=wav" type="audio/wav">
-						<source id="clownogg" src="http://api.pleaseclown.me/?format=ogg" type="audio/ogg">
+						<source id="clownwav" src="https://pleaseclown-me.herokuapp.com/?format=wav" type="audio/wav">
+						<source id="clownogg" src="https://pleaseclown-me.herokuapp.com/?format=ogg" type="audio/ogg">
 						-->
 					Sorry, your browser does not support audio.
 					</audio>
@@ -61,7 +61,7 @@
 
 		<script>
 			function newAudio() {
-				document.getElementById("clownmp3").src = "http://pleaseclown-me.herokuapp.com#" + new Date().getTime();
+				document.getElementById("clownmp3").src = "https://pleaseclown-me.herokuapp.com#" + new Date().getTime();
 				document.getElementById("clownaudio").load();
 			}
 		</script>
