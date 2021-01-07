@@ -12,8 +12,6 @@ To change the format, include `?format=<format>` at the end of the URL. Supporte
 This README will be updated when more features are added to the API.
 
 ## Demo
-**Warning:** the demo is currently not functional (until https support is added).
-
 To demo the project, check out the [website](https://pleaseclown.me).
 
 
