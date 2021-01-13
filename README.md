@@ -4,7 +4,7 @@ An API that returns random clown sounds (WIP)
 ## How to use
 **api.pleaseclown.me**
 
-Currently https is not supported by default for the API. However, the URL **pleaseclown-me.herokuapp.com** DOES work with HTTPS and is an alias to the above URL. This will be changed in the near future.
+Https **is** supported for the API. **pleaseclown-me.herokuapp.com** is an alias to the above URL and also works with https.
 
 By default, the API returns a random sound effect in the MP3 format.
 To change the format, include `?format=<format>` at the end of the URL. Supported file formats are .mp3, with future support for .wav, .ogg, and .flac file types.
