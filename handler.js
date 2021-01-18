@@ -1,18 +1,18 @@
 const fs = require('fs');
 const audio = require('./audio.json');
+const audioFiles = fs.readdirSync('./audio');
 
 module.exports.handleRequest = function(req, res) {
-    const headers = {
+    var headers = {
 			'Access-Control-Allow-Origin': '*',
 			'Access-Control-Allow-Methods': 'GET',
-			'Access-Control-Allow-Headers': ['Content-Type', 'Content-Length'],
-			'Cache-Control': ['max-age=0', 'must-revalidate']
+            'Access-Control-Allow-Headers': ['Content-Type', 'Content-Length'],
+            'Cache-Control': ['public', 'max-age=604800', 'immutable']
         };
 
     try {
         //Create url to parse the path+query
         //?format=mp3,wav,ogg,...
-        //Todo: Add compatibility for specific sounds and formats
         var filePath = "";
         var url = req.url;
         var format = "mp3";
@@ -23,8 +23,10 @@ module.exports.handleRequest = function(req, res) {
         console.log(url + "\n" + format);
         if (req.method == 'GET' || req.method == 'HEAD') {
             if(url == '/' || url == '/random') {
-                //Send back a random audio (mp3).
+                //Send back a random audio.
                 filePath = './audio/' + randomAudio();
+                //Update headers
+                headers['Cache-Control'] = ['max-age=0', 'must-revalidate'];
             }
             else if (url.indexOf('/audio') == 0) {
                 if(audio.includes(url.substring(7))) {
@@ -46,39 +48,17 @@ module.exports.handleRequest = function(req, res) {
             
 
             if (filePath != "") {
-                var ctype = 'audio/mpeg';
-                if(format == "wav") {
+                if(format == "mp3") {
+                    var ctype = 'audio/mpeg';
+                    filePath += '.mp3';
+                }
+                else if(format == "wav") {
                     ctype = 'audio/wav';
-                    //run ffmpeg command
-                    exec("ffmpeg -y -i " + filePath + " output.wav", (error, stdout, stderr) => {
-                        if(error) {
-                            console.log(`error: ${error.message}`);
-                            return;
-                        }
-                        if (stderr) {
-                            //console.log(`stderr: ${stderr}`);
-                            return;
-                        }
-                        //console.log(`stdout: ${stdout}`);
-                    });
-                    filePath = 'output.wav';
+                    filePath += '.wav';
                 }
                 else if (format == "ogg") {
                     ctype = 'audio/ogg';
-                    //run ffmpeg command
-                    exec("ffmpeg -y -i " + filePath + " output.oga", (error, stdout, stderr) => {
-                        if(error) {
-                            console.log(`error: ${error.message}`);
-                            return;
-                        }
-                        if (stderr) {
-                            //console.log(`stderr: ${stderr}`);
-                            return;
-                        }
-                        //console.log(`stdout: ${stdout}`);
-                    });
-                    filePath = 'output.oga';
-
+                    filePath += '.ogg';
                 }
                 console.log(filePath); //log filepath
                 var stat = fs.statSync(filePath);
@@ -104,6 +84,8 @@ module.exports.handleRequest = function(req, res) {
     return res;
 }
 
+//return random audio from the list (only multiples of 3 so only mp3 files)
 function randomAudio() {
-    return  audio[Math.floor(Math.random() * audio.length)];
+    var rand = Math.floor(Math.random() * audio.length);
+    return  audio[rand - rand % 3];
 }
