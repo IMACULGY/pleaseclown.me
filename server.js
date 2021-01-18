@@ -4,7 +4,7 @@ const handler = require('./handler');
 
 
 //Create the HTTPS Server
-const port = process.env.PORT || 8080
+const port = 8000
 http.createServer(function (req, res) {
     console.log(req.method);
     res = handler.handleRequest(req, res);

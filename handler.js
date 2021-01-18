@@ -14,22 +14,28 @@ module.exports.handleRequest = function(req, res) {
         //?format=mp3,wav,ogg,...
         //Todo: Add compatibility for specific sounds and formats
         var filePath = "";
-        const url = new URL('https://example.com/' + req.url);
+        var url = req.url;
+        var format = "mp3";
+        if(req.url.indexOf('?') != -1) {
+            url = url.substring(0, req.url.indexOf('?'));
+            format = req.url.substring(req.url.indexOf('?') + 8);
+        }
+        console.log(url + "\n" + format);
         if (req.method == 'GET' || req.method == 'HEAD') {
-            if(req.url == '/' || req.url == '/random') {
+            if(url == '/' || url == '/random') {
                 //Send back a random audio (mp3).
                 filePath = './audio/' + randomAudio();
             }
-            else if (req.url.indexOf('/audio') == 0) {
-                if(audio.includes(req.url.substring(7))) {
-                    filePath = '.' + req.url;
+            else if (url.indexOf('/audio') == 0) {
+                if(audio.includes(url.substring(7))) {
+                    filePath = '.' + url;
                 }
                 else {
                     res.writeHead(404);
                     res.end('Audio File Not Found\n');
                 }
             }
-            else if (req.url == '/test') {
+            else if (url == '/test') {
                 res.writeHead(200);
                 res.end('Hello World\n');
             }
@@ -37,13 +43,48 @@ module.exports.handleRequest = function(req, res) {
                 res.writeHead(404);
                 res.end('Not Found\n');
             }
+            
 
             if (filePath != "") {
-                console.log(filePath);
+                var ctype = 'audio/mpeg';
+                if(format == "wav") {
+                    ctype = 'audio/wav';
+                    //run ffmpeg command
+                    exec("ffmpeg -y -i " + filePath + " output.wav", (error, stdout, stderr) => {
+                        if(error) {
+                            console.log(`error: ${error.message}`);
+                            return;
+                        }
+                        if (stderr) {
+                            //console.log(`stderr: ${stderr}`);
+                            return;
+                        }
+                        //console.log(`stdout: ${stdout}`);
+                    });
+                    filePath = 'output.wav';
+                }
+                else if (format == "ogg") {
+                    ctype = 'audio/ogg';
+                    //run ffmpeg command
+                    exec("ffmpeg -y -i " + filePath + " output.oga", (error, stdout, stderr) => {
+                        if(error) {
+                            console.log(`error: ${error.message}`);
+                            return;
+                        }
+                        if (stderr) {
+                            //console.log(`stderr: ${stderr}`);
+                            return;
+                        }
+                        //console.log(`stdout: ${stdout}`);
+                    });
+                    filePath = 'output.oga';
+
+                }
+                console.log(filePath); //log filepath
                 var stat = fs.statSync(filePath);
                 res.writeHead(200, {
                     ...headers,
-                    'Content-Type': 'audio/mpeg',
+                    'Content-Type': ctype,
                     'Content-Length': stat.size
                 });
                 fs.createReadStream(filePath).pipe(res);
