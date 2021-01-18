@@ -87,5 +87,5 @@ module.exports.handleRequest = function(req, res) {
 //return random audio from the list (only multiples of 3 so only mp3 files)
 function randomAudio() {
     var rand = Math.floor(Math.random() * audio.length);
-    return  audio[rand - rand % 3];
+    return  audio[rand];
 }
