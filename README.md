@@ -20,5 +20,7 @@ This README will be updated when more features are added to the API.
 ## Demo
 To demo the project, check out the [website](https://pleaseclown.me).
 
+## Contributing
+To contribute to the project, 
 
 Made by Drew I. (IMACULGY)
