@@ -21,6 +21,6 @@ This README will be updated when more features are added to the API.
 To demo the project, check out the [website](https://pleaseclown.me).
 
 ## Contributing
-To contribute to the project, 
+To contribute to the project, fork + clone the "develop" branch to your local machine. Make a pull request to "develop" with any new changes. Make sure you can locally host the server on your own machine, and everything is compatible before you make a PR!
 
 Made by Drew I. (IMACULGY)
