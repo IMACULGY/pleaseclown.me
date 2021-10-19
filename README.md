@@ -1,5 +1,5 @@
 # pleaseclown.me
-An API that returns random clown sounds (WIP)
+An API that returns random clown sounds.
 
 ![clown](https://user-images.githubusercontent.com/32719081/137602708-5884e8d8-44fb-4862-b9aa-38a5d0aa2a81.png)
 
@@ -20,5 +20,7 @@ This README will be updated when more features are added to the API.
 ## Demo
 To demo the project, check out the [website](https://pleaseclown.me).
 
+## Contributing
+To contribute to the project, fork + clone the "develop" branch to your local machine. Make a pull request to "develop" with any new changes. Make sure you can locally host the server on your own machine, and everything is compatible before you make a PR!
 
 Made by Drew I. (IMACULGY)
